@@ -41,7 +41,11 @@ server.on("upgrade", (req, socket) => {
     "\r\n"
   ];
 
-  console.log("upgrade requested")
+  socket.write(headers.join("\r\n"))
+  socket.write(objToResponse({msg: getMsgs()}))
+  socket.on("data", (buffer) => {
+    console.log(buffer)
+  })
 })
 
 const port = process.env.PORT || 8080;
